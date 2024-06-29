@@ -9,9 +9,10 @@ class BytePairTokenizer(nn.Module):
         super().__init__()
         self.tokenizer = SimpleTokenizer()
 
-    def forward(self, texts):
+    def forward(self, texts, device="cuda"):
         with torch.no_grad():
-            return self.tokenizer.tokenize(list(texts))
+            token_indices = self.tokenizer.tokenize(list(texts))
+            return token_indices.to(device)
 
     def decode_tokens(self, tokens):
         with torch.no_grad():
